@@ -14,8 +14,8 @@ from dash.dependencies import Input, Output, State
 
 steam = pd.read_csv('steam_games.csv')
 
-st.header('Steam Store Data', divider='violet')
-
+st.header('Steam Store Data')
+st.divider() 
 #Header info
 
 
