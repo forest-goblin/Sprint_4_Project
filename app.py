@@ -13,7 +13,7 @@ from dash.dependencies import Input, Output, State
 
 
 steam = pd.read_csv('C:/Users/Donah/Documents/git/projects/Sprint_4_Project/steam_games.csv')
-
+file = open(r'C:\Users\Donah\Documents\git\projects\Sprint_4_Project\steam_games.csv')
 st.header('Steam Store Data', divider='violet')
 
 #Header info
