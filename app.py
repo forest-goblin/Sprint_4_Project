@@ -61,6 +61,10 @@ d1=highest_rev.loc[~highest_rev.index.duplicated(keep='first')]
 combine_dev = pd.concat([b1,d1], axis=0)
 #merging data for graph
 
+x1=pd.DataFrame(top_awards, columns=['awards', 'genres'])
+x1=top_awards.loc[~top_awards.index.duplicated(keep='first')]
+awards_dev = pd.concat([b1,x1], axis=0)
+#merging data for check boxes
 
 st.write("Through these graphs you will be able to explore the performance of game titles and developers on the gaming platform Steam.")
 st.divider() 
@@ -80,54 +84,9 @@ st.write(fig)
 switch = st.checkbox("Look at Developer data")
 switch2 = st.checkbox("Look at Game Title data")
 
-#fig1 = px.bar(combine_dev, x="developer", y="title", color="overall_review_%", barmode="group")
-app =Dash(__name__)
-
-fig1 = app.layout = html.Div([
-    html.Div([
-        html.Label(['Game Genres']),
-        dcc.Dropdown(
-            id='my_drop',
-            options=[
-                {'label':'Recent Reviews', 'value' : 'recent_review'},
-                {'label':'Overall Reviews', 'value' : 'overall_review'},
-                {'label':'Awards', 'value' : 'awards'},
-                {'label':'Overall Review Percent', 'value' : 'overall_review_%'},
-            ],
-            value='overall_review',
-            multi=False,
-            clearable=False,
-            style={'width':'50%'}
-        ),
-     ]),
-
-
-    html.Div([
-         dcc.Graph(id='the_graph')
-    ]),
-
-])
-
-
-@app.callback(
-    Output(component_id='the_graph', component_property='figure'),
-    [Input(component_id='my_drop', component_property='value')]
-)
-
-def update_graph(my_drop):
-    steam_info = steam
-
-    piechart=px.pie(
-        data_frame=steam_info,
-        names=my_drop,
-        hole=.3,
-        )
-    
-    return(piechart)
-
-
-
-fig2 = px.bar(combine_rec_rev, x="title", y="overall_review_count", color="overall_review_%", barmode="group")
+#Changed graph types 
+fig1 = px.pie(awards_dev, values='awards', names='genres', title='Top 20 Awards by Genre')
+fig2 = px.bar(best_rec, x="title", y="overall_review_count", barmode="group")
 
 
 if switch:
